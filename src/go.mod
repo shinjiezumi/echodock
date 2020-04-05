@@ -1,4 +1,4 @@
-module github.com/shinjiezumi/echo-samples/src
+module github.com/shinjiezumi/echodock/src
 
 go 1.13
 
