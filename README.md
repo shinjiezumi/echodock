@@ -1,4 +1,4 @@
-# echo-samples
+# echodock
 ## 構成
 - Go v1.13.7
 - echo v3.3.10
@@ -26,6 +26,6 @@ $ docker-compose up -d
 3. コンテナ再起動+realize実行
     ``` 
     $ docker-compose up -d
-    $ docker-compose exec api realize start --run
+    $ docker-compose exec go realize start --run
     ```
 4. Golandでデバッグ実行
