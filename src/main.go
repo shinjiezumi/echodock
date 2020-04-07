@@ -3,10 +3,10 @@ package main
 import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/shinjiezumi/echo-samples/src/echobasic/cookie"
-	"github.com/shinjiezumi/echo-samples/src/echobasic/request"
-	"github.com/shinjiezumi/echo-samples/src/echobasic/response"
-	"github.com/shinjiezumi/echo-samples/src/views"
+	"github.com/shinjiezumi/echodock/src/echobasic/cookie"
+	"github.com/shinjiezumi/echodock/src/echobasic/request"
+	"github.com/shinjiezumi/echodock/src/echobasic/response"
+	"github.com/shinjiezumi/echodock/src/views"
 	"io/ioutil"
 	"net/http"
 )

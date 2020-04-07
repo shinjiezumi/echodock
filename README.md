@@ -8,6 +8,7 @@
 $ git clone https://github.com/shinjiezumi/echodock.git
 $ cd echodock
 $ docker-compose up -d
+$ sh run.sh
 ```
 
 ## 動作確認
