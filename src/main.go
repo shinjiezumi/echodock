@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"github.com/shinjiezumi/echodock/src/board"
 	"github.com/shinjiezumi/echodock/src/echobasic/cookie"
 	"github.com/shinjiezumi/echodock/src/echobasic/request"
 	"github.com/shinjiezumi/echodock/src/echobasic/response"
@@ -58,6 +59,8 @@ func main() {
 
 		return c.HTML(http.StatusOK, string(body))
 	})
+
+	board.SetUpRoute(e)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
