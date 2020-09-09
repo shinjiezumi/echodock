@@ -6,17 +6,34 @@ import (
 	"io"
 )
 
+const basePath = "views/board/"
+
+var pages = []string{
+	"index",
+}
+
 type Template struct {
-	templates *template.Template
+	templates map[string]*template.Template
 }
 
 func (t *Template) Render(w io.Writer, name string, data interface{}, _ echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
+	return t.templates[name].ExecuteTemplate(w, "layout.html", data)
 }
 
 func LoadTemplate(e *echo.Echo) {
+	commonTemplates := []string{
+		basePath + "layout.html",
+		basePath + "header.html",
+		basePath + "footer.html",
+	}
+
+	templates := make(map[string]*template.Template)
+	for _, v := range pages {
+		templates[v] = template.Must(template.ParseFiles(append(commonTemplates, basePath+v+".html")...))
+	}
+
 	t := &Template{
-		templates: template.Must(template.ParseGlob("views/board/*.html")),
+		templates: templates,
 	}
 
 	e.Renderer = t
