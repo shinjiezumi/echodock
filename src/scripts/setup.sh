@@ -1,0 +1,1 @@
+docker-compose exec go sql-migrate up
