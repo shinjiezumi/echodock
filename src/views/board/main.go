@@ -24,7 +24,6 @@ func LoadTemplate(e *echo.Echo) {
 	commonTemplates := []string{
 		basePath + "layout.html",
 		basePath + "header.html",
-		basePath + "footer.html",
 	}
 
 	templates := make(map[string]*template.Template)

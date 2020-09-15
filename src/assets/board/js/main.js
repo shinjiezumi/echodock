@@ -12,7 +12,6 @@ BOARD.COMMON.EVENTS = {
   bindEvents: function () {
   },
   initialize: function () {
-    alert("hogehoge")
   },
 };
 
