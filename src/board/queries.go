@@ -41,13 +41,30 @@ func GetTags(db *gorm.DB) []*board.Tag {
 }
 
 func SaveBoard(db *gorm.DB, b *board.Board) {
-	if err := db.Create(b).Error; err != nil {
+	var current board.Board
+	if err := db.First(&current, b.ID).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			if err := db.Create(b).Error; err != nil {
+				panic(err)
+			}
+			return
+		}
+	}
+
+	b.ID = current.ID
+	if err := db.Save(b).Error; err != nil {
 		panic(err)
 	}
 }
 
 func SaveTagRelation(db *gorm.DB, tr *[]board.TagRelation) {
 	if err := db.Create(tr).Error; err != nil {
+		panic(err)
+	}
+}
+
+func DeleteTagRelation(db *gorm.DB, boardID int) {
+	if err := db.Where("board_id = ?", boardID).Delete(board.TagRelation{}).Error; err != nil {
 		panic(err)
 	}
 }

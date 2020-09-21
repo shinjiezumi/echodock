@@ -12,6 +12,7 @@ var pages = []string{
 	"index",
 	"create",
 	"show",
+	"edit",
 }
 
 type Template struct {

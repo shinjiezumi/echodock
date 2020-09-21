@@ -12,6 +12,9 @@ import (
 func SetUpRoute(e *echo.Echo) {
 	database.Initialize()
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
+	e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
+		Getter: middleware.MethodFromForm("_method"),
+	}))
 
 	board.LoadTemplate(e)
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
@@ -23,5 +26,6 @@ func SetUpRoute(e *echo.Echo) {
 	e.GET("/boards/create", Create)
 	e.POST("/boards/create", Store)
 	e.GET("/boards/:id", Show)
-
+	e.GET("/boards/:id/edit", Edit)
+	e.PUT("/boards/:id", Update)
 }

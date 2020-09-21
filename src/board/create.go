@@ -8,8 +8,9 @@ import (
 )
 
 type tag struct {
-	ID   int
-	Name string
+	ID        int
+	Name      string
+	IsChecked bool
 }
 
 func Create(c echo.Context) error {
