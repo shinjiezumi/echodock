@@ -1,7 +1,7 @@
 package board
 
 import (
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"github.com/shinjiezumi/echodock/src/database"
 	"github.com/shinjiezumi/echodock/src/util"
 	"net/http"
@@ -31,12 +31,16 @@ func Index(c echo.Context) error {
 		})
 	}
 
+	flushMsg := util.GetFlushMsg(c)
+
 	data := struct {
-		Title  string
-		Boards []b
+		Title    string
+		Boards   []b
+		FlushMsg string
 	}{
-		Title:  util.GenerateTitle("掲示板一覧"),
-		Boards: boardData,
+		Title:    util.GenerateTitle("掲示板一覧"),
+		Boards:   boardData,
+		FlushMsg: flushMsg,
 	}
 
 	return c.Render(http.StatusOK, "index", data)

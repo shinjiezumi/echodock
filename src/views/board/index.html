@@ -7,11 +7,9 @@
       </div>
     </div>
 
-      {{/*    @if (session('flash_message'))*/}}
-      {{/*    <div class="alert alert-success">*/}}
-      {{/*        {{session('flash_message')}}*/}}
-      {{/*    </div>*/}}
-      {{/*    @endif*/}}
+      {{ if ne .FlushMsg "" }}
+        <div class="alert alert-success">{{.FlushMsg}}</div>
+      {{end}}
 
     <table class="table table-hover boards__table">
       <thead class="thead-dark">

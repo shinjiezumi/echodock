@@ -1,9 +1,10 @@
 package board
 
 import (
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"github.com/shinjiezumi/echodock/src/database"
 	"github.com/shinjiezumi/echodock/src/models/board"
+	"github.com/shinjiezumi/echodock/src/util"
 	"net/http"
 )
 
@@ -42,6 +43,8 @@ func Store(c echo.Context) error {
 	}
 
 	tx.Commit()
+
+	util.SetFlushMsg(c, "作成しました")
 
 	c.Redirect(http.StatusFound, "/boards")
 

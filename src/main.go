@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/shinjiezumi/echodock/src/board"
 	"github.com/shinjiezumi/echodock/src/echobasic/cookie"
 	"github.com/shinjiezumi/echodock/src/echobasic/request"

@@ -1,7 +1,7 @@
 package board
 
 import (
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"github.com/shinjiezumi/echodock/src/database"
 	"github.com/shinjiezumi/echodock/src/util"
 	"net/http"

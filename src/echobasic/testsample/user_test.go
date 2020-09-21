@@ -1,7 +1,7 @@
 package testsample
 
 import (
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -11,7 +11,7 @@ import (
 
 var (
 	mockDB = map[string]*User{
-		"taro@gmail.com": &User{"Taro", "taro@gmail.com"},
+		"taro@gmail.com": {"Taro", "taro@gmail.com"},
 	}
 	userJSON = `{"name":"Taro","email":"taro@gmail.com"}`
 )
