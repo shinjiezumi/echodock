@@ -12,7 +12,7 @@ type StoreRequest struct {
 	Name  string `form:"name" validate:"required,min=1,max=255"`
 	Title string `form:"title" validate:"required,min=1,max=255"`
 	Body  string `form:"body" validate:"required,min=1,max=1024"`
-	Tags  []uint `form:"tags[]"`
+	Tags  []int  `form:"tags[]"`
 }
 
 func Store(c echo.Context) error {

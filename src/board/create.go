@@ -8,7 +8,7 @@ import (
 )
 
 type tag struct {
-	ID   uint
+	ID   int
 	Name string
 }
 

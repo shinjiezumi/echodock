@@ -11,6 +11,7 @@ const basePath = "views/board/"
 var pages = []string{
 	"index",
 	"create",
+	"show",
 }
 
 type Template struct {

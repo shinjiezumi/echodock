@@ -13,7 +13,21 @@ func GetBoardList(db *gorm.DB) []*board.Board {
 			panic(err)
 		}
 	}
+
 	return ret
+}
+
+func GetBoardByID(db *gorm.DB, id int) *board.Board {
+	var ret board.Board
+
+	if err := db.Preload("Tags").First(&ret, id).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil
+		}
+		panic(err)
+	}
+
+	return &ret
 }
 
 func GetTags(db *gorm.DB) []*board.Tag {

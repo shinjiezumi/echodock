@@ -1,9 +1,9 @@
 package board
 
 type TagRelation struct {
-	ID      uint `gorm:"primaryKey"`
-	BoardID uint
-	TagID   uint
+	ID      int `gorm:"primaryKey"`
+	BoardID int
+	TagID   int
 }
 
 func (t TagRelation) TableName() string {

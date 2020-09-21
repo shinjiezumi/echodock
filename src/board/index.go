@@ -8,7 +8,7 @@ import (
 )
 
 type b struct {
-	ID        uint
+	ID        int
 	Title     string
 	Body      string
 	Name      string

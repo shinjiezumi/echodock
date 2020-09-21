@@ -22,4 +22,6 @@ func SetUpRoute(e *echo.Echo) {
 	e.GET("/boards", Index)
 	e.GET("/boards/create", Create)
 	e.POST("/boards/create", Store)
+	e.GET("/boards/:id", Show)
+
 }

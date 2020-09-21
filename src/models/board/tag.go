@@ -5,7 +5,7 @@ import (
 )
 
 type Tag struct {
-	ID        uint `gorm:"primaryKey"`
+	ID        int `gorm:"primaryKey"`
 	Name      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
