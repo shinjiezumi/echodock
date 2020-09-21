@@ -13,7 +13,7 @@ func Initialize() {
 	pass := os.Getenv("DB_PASSWORD")
 	protocol := os.Getenv("DB_PROTOCOL")
 	dbName := os.Getenv("DB_NAME")
-	dsn := user + ":" + pass + "@" + protocol + "/" + dbName + "?charset=utf8mb4&parseTime=true"
+	dsn := user + ":" + pass + "@" + protocol + "/" + dbName + "?charset=utf8mb4&parseTime=true&loc=Asia%2FTokyo"
 
 	conn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
