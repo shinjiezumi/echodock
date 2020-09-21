@@ -15,7 +15,7 @@ type tag struct {
 
 func Create(c echo.Context) error {
 	form := make(map[string]interface{}, 0)
-	form["action"] = "/boards/create"
+	form["action"] = "/boards"
 	form["method"] = "POST"
 	form["name"] = ""
 	form["title"] = ""
