@@ -10,6 +10,7 @@ const basePath = "views/board/"
 
 var pages = []string{
 	"index",
+	"create",
 }
 
 type Template struct {
@@ -24,6 +25,7 @@ func LoadTemplate(e *echo.Echo) {
 	commonTemplates := []string{
 		basePath + "layout.html",
 		basePath + "header.html",
+		basePath + "form.html",
 	}
 
 	templates := make(map[string]*template.Template)

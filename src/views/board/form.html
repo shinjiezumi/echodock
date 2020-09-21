@@ -1,0 +1,30 @@
+{{ define "form" }}
+  <form action="{{ .Form.action }}" method="{{ .Form.method }}">
+    <div class="form-group">
+      <label for="name">名前</label>
+      <input class="form-control" type="text" id="name" name="name" value="{{ .Form.name }}"/>
+    </div>
+    <div class="form-group">
+      <label for="title">タイトル</label>
+      <input class="form-control" type="text" id="title" name="title" value="{{ .Form.title }}"/>
+    </div>
+    <div class="form-group">
+      <label for="body">本文</label>
+      <textarea class="form-control" id="body" name="body" rows="10">{{ .Form.body }}</textarea>
+    </div>
+    <div class="form-group">
+      <span>タグ</span>
+        {{ range $t := .Form.tags }}
+          <div class="form-check">
+            <label class="form-check-label"></label>
+            <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $t.ID }}"/>
+              {{ $t.Name }}
+          </div>
+        {{ end }}
+    </div>
+    <div class="form-group text-center">
+      <input type="hidden" name="csrf" value="{{ .Form.csrf }}">
+      <input class="btn btn-secondary" type="submit" value="保存">
+    </div>
+  </form>
+{{ end }}

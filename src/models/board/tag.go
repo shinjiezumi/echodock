@@ -4,15 +4,13 @@ import (
 	"time"
 )
 
-type Board struct {
+type Tag struct {
 	ID        uint `gorm:"primaryKey"`
-	Title     string
-	Body      string
 	Name      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-func (b Board) TableName() string {
-	return "boards"
+func (t Tag) TableName() string {
+	return "tags"
 }

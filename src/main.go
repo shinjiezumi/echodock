@@ -21,6 +21,7 @@ func main() {
 		Format:           "${time_custom} method=${method}, uri=${uri}, status=${status}\n",
 		CustomTimeFormat: "2006-01-02 15:04:05",
 	}))
+	e.Use(middleware.Recover())
 
 	// ROOT
 	e.GET("/", func(c echo.Context) error {
