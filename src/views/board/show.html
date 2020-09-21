@@ -19,7 +19,7 @@
           {{ end }}
       </div>
       <div class="card-body">
-        <p class="card-text">{{.Board.Body}}</p>
+        <p class="card-text">{{nl2br .Board.Body}}</p>
         <p class="text-right font-weight-bold mr-10">{{.Board.Name}}</p>
       </div>
     </div>
