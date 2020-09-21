@@ -24,11 +24,11 @@
       </div>
     </div>
 
-{{/*    <div class="p-comment__list">*/}}
-{{/*      <div class="p-comment_listTitle">コメント</div>*/}}
-{{/*      @include('board.comments.comment')*/}}
-{{/*    </div>*/}}
+    <div class="p-comment__list">
+      <div class="p-comment_listTitle">コメント</div>
+        {{template "comment_form" .}}
+    </div>
 
-{{/*    @include('board.comments.form')*/}}
+      {{template "comments" .}}
   </main>
 {{end}}

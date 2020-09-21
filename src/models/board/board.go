@@ -12,7 +12,8 @@ type Board struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 
-	Tags []*Tag `gorm:"many2many:board_tag_relation"`
+	Tags     []*Tag `gorm:"many2many:board_tag_relation"`
+	Comments []*Comment
 }
 
 func (b Board) TableName() string {

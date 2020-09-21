@@ -22,10 +22,12 @@ func Show(c echo.Context) error {
 		Title    string
 		Board    board.Board
 		FlushMsg string
+		Csrf     string
 	}{
 		Title:    util.GenerateTitle("掲示板一覧"),
 		Board:    *b,
 		FlushMsg: flushMsg,
+		Csrf:     c.Get("csrf").(string),
 	}
 
 	return c.Render(http.StatusOK, "show", data)

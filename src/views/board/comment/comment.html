@@ -1,0 +1,19 @@
+{{define "comments"}}
+  <p>{{ $boardID := .Board.ID}}</p>
+  <p>{{ $csrf := .Csrf}}</p>
+
+  {{range $comment := .Board.Comments}}
+      <div class="p-comment__item">
+        <p>{{nl2br $comment.Comment}}</p>
+        <div class="p-comment__bottomLine">
+          <span>{{$comment.Name}}</span>
+          <span>{{$comment.CreatedAt}}</span>
+          <form action="/boards/{{ $boardID }}/comments/{{ $comment.ID }}" method="POST" style="display:inline">
+            <input type="hidden" name="csrf" value="{{ $csrf }}"/>
+            <input type="hidden" name="_method" value="DELETE"/>
+            <input type="submit" class="btn btn-outline-dark" value="削除"/>
+          </form>
+        </div>
+      </div>
+    {{end}}
+{{end}}

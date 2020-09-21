@@ -7,7 +7,10 @@ import (
 	"strings"
 )
 
-const basePath = "views/board/"
+const (
+	basePath    = "views/board/"
+	commentPath = basePath + "comment/"
+)
 
 var pages = []string{
 	"index",
@@ -29,6 +32,8 @@ func LoadTemplate(e *echo.Echo) {
 		basePath + "layout.html",
 		basePath + "header.html",
 		basePath + "form.html",
+		commentPath + "comment.html",
+		commentPath + "form.html",
 	}
 
 	funcs := template.FuncMap{

@@ -17,6 +17,7 @@ BOARD.COMMON.EVENTS = {
   },
   handleDeleteBoard: function (parent, e) {
     e.preventDefault()
+    // CSRFをセットしてsubmit。go側でループの外で取ればいけるかも
     let form = $(e.target.closest('form'))
     form.children("input[name='csrf']").val(parent.$csrf.val())
     form.submit()
