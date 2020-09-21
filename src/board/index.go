@@ -32,15 +32,16 @@ func Index(c echo.Context) error {
 	}
 
 	flushMsg := util.GetFlushMsg(c)
-
 	data := struct {
 		Title    string
 		Boards   []b
 		FlushMsg string
+		Csrf     string
 	}{
 		Title:    util.GenerateTitle("掲示板一覧"),
 		Boards:   boardData,
 		FlushMsg: flushMsg,
+		Csrf:     c.Get("csrf").(string),
 	}
 
 	return c.Render(http.StatusOK, "index", data)

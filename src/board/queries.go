@@ -57,6 +57,12 @@ func SaveBoard(db *gorm.DB, b *board.Board) {
 	}
 }
 
+func DeleteBoard(db *gorm.DB, boardID int) {
+	if err := db.Delete(board.Board{}, boardID).Error; err != nil {
+		panic(err)
+	}
+}
+
 func SaveTagRelation(db *gorm.DB, tr *[]board.TagRelation) {
 	if err := db.Create(tr).Error; err != nil {
 		panic(err)

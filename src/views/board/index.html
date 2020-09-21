@@ -34,12 +34,15 @@
           <td><a class="btn btn-outline-dark" href="/boards/{{ $board.ID }}">詳細</a>
           </td>
           <td>
-            <form action="/boards/{{ $board.ID }}" style="display:inline">
-              <input type="submit" class="btn btn-outline-dark" value="削除"/>
+            <form action="/boards/{{ $board.ID }}" method="POST" style="display:inline">
+              <input type="hidden" name="_method" value="DELETE"/>
+              <input type="hidden" name="csrf" value=""/>
+              <input type="button" class="btn btn-outline-dark deleteBoardBtn" value="削除"/>
             </form>
           </td>
         </tr>
       {{end}}
+      <input type="hidden" id="csrf" value="{{.Csrf}}"/>
       </tbody>
     </table>
 

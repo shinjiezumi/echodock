@@ -28,4 +28,5 @@ func SetUpRoute(e *echo.Echo) {
 	e.GET("/boards/:id", Show)
 	e.GET("/boards/:id/edit", Edit)
 	e.PUT("/boards/:id", Update)
+	e.DELETE("/boards/:id", Delete)
 }
