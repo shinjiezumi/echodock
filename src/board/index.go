@@ -3,6 +3,7 @@ package board
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/shinjiezumi/echodock/src/database"
+	"github.com/shinjiezumi/echodock/src/models/board"
 	"github.com/shinjiezumi/echodock/src/util"
 	"net/http"
 )
@@ -17,7 +18,7 @@ type b struct {
 }
 
 func Index(c echo.Context) error {
-	boards := GetBoardList(database.Conn)
+	boards := board.GetBoardList(database.Conn)
 
 	var boardData []b
 	for _, board := range boards {

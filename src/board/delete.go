@@ -3,6 +3,7 @@ package board
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/shinjiezumi/echodock/src/database"
+	"github.com/shinjiezumi/echodock/src/models/board"
 	"github.com/shinjiezumi/echodock/src/util"
 	"net/http"
 	"strconv"
@@ -10,7 +11,7 @@ import (
 
 func Delete(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	b := GetBoardByID(database.Conn, id)
+	b := board.GetBoardByID(database.Conn, id)
 	if b == nil {
 		return echo.NewHTTPError(http.StatusNotFound, "user not found")
 	}
@@ -18,11 +19,11 @@ func Delete(c echo.Context) error {
 	tx := database.Conn.Begin()
 
 	// 掲示板削除
-	DeleteBoard(tx, id)
+	board.DeleteBoard(tx, id)
 
 	// タグ保存
 	if len(b.Tags) > 0 {
-		DeleteTagRelation(tx, id)
+		board.DeleteTagRelation(tx, id)
 	}
 
 	tx.Commit()

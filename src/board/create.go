@@ -3,6 +3,7 @@ package board
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/shinjiezumi/echodock/src/database"
+	"github.com/shinjiezumi/echodock/src/models/board"
 	"github.com/shinjiezumi/echodock/src/util"
 	"net/http"
 )
@@ -22,7 +23,7 @@ func Create(c echo.Context) error {
 	form["body"] = ""
 
 	tagData := make([]tag, 0)
-	tags := GetTags(database.Conn)
+	tags := board.GetTags(database.Conn)
 	for _, t := range tags {
 		tagData = append(tagData, tag{
 			ID:   t.ID,

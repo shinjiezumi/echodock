@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/shinjiezumi/echodock/src/board/comment"
 	"github.com/shinjiezumi/echodock/src/database"
 	"github.com/shinjiezumi/echodock/src/views/board"
 )
@@ -29,4 +30,7 @@ func SetUpRoute(e *echo.Echo) {
 	e.GET("/boards/:id/edit", Edit)
 	e.PUT("/boards/:id", Update)
 	e.DELETE("/boards/:id", Delete)
+
+	e.POST("/boards/:id/comments", comment.Store)
+	e.DELETE("/boards/:id/comments/:comment_id", comment.Delete)
 }

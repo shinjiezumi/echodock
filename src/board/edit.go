@@ -3,6 +3,7 @@ package board
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/shinjiezumi/echodock/src/database"
+	"github.com/shinjiezumi/echodock/src/models/board"
 	"github.com/shinjiezumi/echodock/src/util"
 	"net/http"
 	"strconv"
@@ -10,7 +11,7 @@ import (
 
 func Edit(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	b := GetBoardByID(database.Conn, id)
+	b := board.GetBoardByID(database.Conn, id)
 	if b == nil {
 		return echo.NewHTTPError(http.StatusNotFound, "user not found")
 	}
@@ -22,7 +23,7 @@ func Edit(c echo.Context) error {
 	form["title"] = b.Title
 	form["body"] = b.Body
 
-	tags := GetTags(database.Conn)
+	tags := board.GetTags(database.Conn)
 	tagData := make([]tag, 0, len(tags))
 	for _, t := range tags {
 		isChecked := false

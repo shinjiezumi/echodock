@@ -11,7 +11,7 @@ import (
 
 func Show(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	b := GetBoardByID(database.Conn, id)
+	b := board.GetBoardByID(database.Conn, id)
 	if b == nil {
 		return echo.NewHTTPError(http.StatusNotFound, "user not found")
 	}

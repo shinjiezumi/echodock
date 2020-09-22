@@ -15,7 +15,7 @@ func Update(c echo.Context) error {
 		return err
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
-	b := GetBoardByID(database.Conn, id)
+	b := board.GetBoardByID(database.Conn, id)
 	if b == nil {
 		return echo.NewHTTPError(http.StatusNotFound, "user not found")
 	}
@@ -26,10 +26,10 @@ func Update(c echo.Context) error {
 	b.Name = req.Name
 	b.Title = req.Title
 	b.Body = req.Body
-	SaveBoard(tx, b)
+	board.SaveBoard(tx, b)
 
 	// タグ削除
-	DeleteTagRelation(tx, id)
+	board.DeleteTagRelation(tx, id)
 	// タグ保存
 	if len(req.Tags) > 0 {
 		tr := make([]board.TagRelation, 0, len(req.Tags))
@@ -39,7 +39,7 @@ func Update(c echo.Context) error {
 				TagID:   tag,
 			})
 		}
-		SaveTagRelation(tx, &tr)
+		board.SaveTagRelation(tx, &tr)
 	}
 
 	tx.Commit()

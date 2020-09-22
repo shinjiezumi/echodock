@@ -28,7 +28,7 @@ func Store(c echo.Context) error {
 		Title: req.Title,
 		Body:  req.Body,
 	}
-	SaveBoard(tx, &b)
+	board.SaveBoard(tx, &b)
 
 	// タグ保存
 	if len(req.Tags) > 0 {
@@ -39,7 +39,7 @@ func Store(c echo.Context) error {
 				TagID:   tag,
 			})
 		}
-		SaveTagRelation(tx, &tr)
+		board.SaveTagRelation(tx, &tr)
 	}
 
 	tx.Commit()

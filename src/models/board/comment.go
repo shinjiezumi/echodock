@@ -11,8 +11,6 @@ type Comment struct {
 	Name      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
-
-	Tags []*Tag `gorm:"many2many:board_tag_relation"`
 }
 
 func (b Comment) TableName() string {
