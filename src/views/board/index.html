@@ -1,0 +1,53 @@
+{{define "content"}}
+  <main class="container">
+    <div class="d-flex align-items-center mt-5">
+      <h1>掲示板一覧</h1>
+      <div class="ml-auto boards__linkBox">
+        <a class="btn btn-outline-dark" href="/boards/create">新規作成</a>
+      </div>
+    </div>
+
+      {{ if ne .FlushMsg "" }}
+        <div class="alert alert-success">{{.FlushMsg}}</div>
+      {{ end }}
+
+    <table class="table table-hover boards__table">
+      <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>タイトル</th>
+        <th>作成者</th>
+        <th>作成日時</th>
+        <th>更新日時</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      {{range $board := .Boards }}
+        <tr>
+          <th>{{ $board.ID }}</th>
+          <td>{{ $board.Title }}</td>
+          <td>{{ $board.Name }}</td>
+          <td>{{ $board.CreatedAt }}</td>
+          <td>{{ $board.UpdatedAt }}</td>
+          <td><a class="btn btn-outline-dark" href="/boards/{{ $board.ID }}">詳細</a>
+          </td>
+          <td>
+            <form action="/boards/{{ $board.ID }}" method="POST" style="display:inline">
+              <input type="hidden" name="_method" value="DELETE"/>
+              <input type="hidden" name="csrf" value=""/>
+              <input type="button" class="btn btn-outline-dark deleteBoardBtn" value="削除"/>
+            </form>
+          </td>
+        </tr>
+      {{end}}
+      <input type="hidden" id="csrf" value="{{.Csrf}}"/>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center">
+        {{/*        {{ $boards->render() }}*/}}
+    </div>
+  </main>
+{{end}}
