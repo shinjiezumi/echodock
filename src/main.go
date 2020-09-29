@@ -24,7 +24,9 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// ROOT
-	e.GET("/", func(c echo.Context) error {
+	e.GET("/", top)
+
+	e.GET("/health", func(c echo.Context) error {
 		return c.String(http.StatusOK, "ok")
 	})
 
@@ -64,4 +66,14 @@ func main() {
 	board.SetUpRoute(e)
 
 	e.Logger.Fatal(e.Start(":8080"))
+}
+
+func top(c echo.Context) error {
+	data := struct {
+		Title string
+	}{
+		Title: "echodock",
+	}
+
+	return c.Render(http.StatusOK, "top", data)
 }

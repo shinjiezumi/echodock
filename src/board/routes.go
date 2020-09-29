@@ -7,7 +7,6 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/shinjiezumi/echodock/src/board/comment"
 	"github.com/shinjiezumi/echodock/src/database"
-	"github.com/shinjiezumi/echodock/src/views/board"
 )
 
 func SetUpRoute(e *echo.Echo) {
@@ -17,7 +16,6 @@ func SetUpRoute(e *echo.Echo) {
 		Getter: middleware.MethodFromForm("_method"),
 	}))
 
-	board.LoadTemplate(e)
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
 		TokenLookup: "form:csrf",
 	}))
