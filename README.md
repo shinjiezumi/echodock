@@ -8,12 +8,12 @@
 $ git clone https://github.com/shinjiezumi/echodock.git
 $ cd echodock
 $ docker-compose up -d
-$ sh scripts/setup.sh
+$ sh src/scripts/setup.sh
 ```
 
 ## 動作確認
 ```shell script
-$ sh scripts/run.sh
+$ sh src/scripts/run.sh
 ```
 
 `http://localhost:8080`を開く
