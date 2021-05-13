@@ -34,3 +34,30 @@ $ sh src/scripts/run.sh
     $ docker-compose exec go realize start --run
     ```
 4. Golandでデバッグ実行
+
+## localstack
+
+1. localstack用のプロファイル作成
+
+```shell
+aws configure
+```
+
+2. 動作確認
+
+```shell
+$ aws sqs create-queue --queue-name test --endpoint-url=http://localhost:4566 --profile=localstack
+{
+    "QueueUrl": "http://localstack:4566/000000000000/test"
+}
+```
+
+```shell
+$ aws sqs list-queues  --endpoint-url=http://localhost:4566 --profile=localstack
+{
+    "QueueUrls": [
+        "http://localstack:4566/000000000000/test"
+    ]
+}
+```
+
