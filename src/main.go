@@ -1,20 +1,29 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/shinjiezumi/echodock/src/board"
 	"github.com/shinjiezumi/echodock/src/echobasic/cookie"
 	"github.com/shinjiezumi/echodock/src/echobasic/request"
 	"github.com/shinjiezumi/echodock/src/echobasic/response"
+	"github.com/shinjiezumi/echodock/src/localstack/sqs"
 	"github.com/shinjiezumi/echodock/src/views"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 func main() {
 	e := echo.New()
 	views.LoadTemplate(e)
+
+	if os.Getenv("APP_ENV") == "local" {
+		if err := godotenv.Load(".env"); err != nil {
+			panic("load env file failed")
+		}
+	}
 
 	// アクセスログの設定
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -64,6 +73,7 @@ func main() {
 	})
 
 	board.SetUpRoute(e)
+	sqs.SetUp(e)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
