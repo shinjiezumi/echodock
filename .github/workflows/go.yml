@@ -40,11 +40,13 @@ jobs:
           sudo apt-get install default-mysql-client
 
       # setup database
-      - name: setup database
+      - name: Setup database
         working-directory: ./src
-        run: |
-          go get github.com/rubenv/sql-migrate/...
-          sql-migrate up
+        run: go get github.com/rubenv/sql-migrate/...
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        #          sql-migrate up
 
       # build and run test
       - name: Build
