@@ -48,8 +48,10 @@ jobs:
 
       # build and run test
       - name: Build
+        working-directory: ./src
         run: go build -v ./...
       - name: Test
+        working-directory: ./src
         run: go test -race -v ./...
 
   deploy:
