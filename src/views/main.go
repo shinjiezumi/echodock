@@ -2,15 +2,20 @@ package views
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/rakyll/statik/fs"
 	"html/template"
 	"io"
+	"io/ioutil"
+	"path/filepath"
 	"strings"
+
+	_ "github.com/shinjiezumi/echodock/src/statik"
 )
 
 const (
-	basePath    = "views/"
-	boardPath   = "views/board/"
-	commentPath = "views/board/comment/"
+	basePath    = "/"
+	boardPath   = "/board/"
+	commentPath = "/board/comment/"
 )
 
 var pages = []string{
@@ -50,11 +55,15 @@ func LoadTemplate(e *echo.Echo) {
 
 	templates := make(map[string]*template.Template)
 	for _, v := range pages {
-		templates[v] = template.Must(template.New("t").Funcs(funcs).ParseFiles(append(commonTemplates, basePath+v+".html")...))
+		t := template.New("t").Funcs(funcs)
+		filenames := append(commonTemplates, basePath+v+".html")
+		templates[v] = parseFiles(t, filenames)
 		templates[v].Funcs(funcs)
 	}
 	for _, v := range boardPages {
-		templates[v] = template.Must(template.New("t").Funcs(funcs).ParseFiles(append(commonTemplates, boardPath+v+".html")...))
+		t := template.New("t").Funcs(funcs)
+		filenames := append(commonTemplates, boardPath+v+".html")
+		templates[v] = parseFiles(t, filenames)
 		templates[v].Funcs(funcs)
 	}
 
@@ -63,4 +72,43 @@ func LoadTemplate(e *echo.Echo) {
 	}
 
 	e.Renderer = t
+}
+
+func parseFiles(t *template.Template, filenames []string) *template.Template {
+	statikFS, err := fs.New()
+	if err != nil {
+		panic(err)
+	}
+
+	for _, filename := range filenames {
+		f, err := statikFS.Open(filename)
+		if err != nil {
+			panic(err)
+		}
+
+		b, err := ioutil.ReadAll(f)
+		if err != nil {
+			panic(err)
+		}
+		s := string(b)
+		name := filepath.Base(filename)
+		// First template becomes return value if not already defined,
+		// and we use that one for subsequent New calls to associate
+		// all the templates together. Also, if this file has the same name
+		// as t, this file becomes the contents of t, so
+		//  t, err := New(name).Funcs(xxx).ParseFiles(name)
+		// works. Otherwise we create a new template associated with t.
+		var tmpl *template.Template
+		if name == t.Name() {
+			tmpl = t
+		} else {
+			tmpl = t.New(name)
+		}
+		_, err = tmpl.Parse(s)
+		if err != nil {
+			panic(err)
+		}
+	}
+	return t
+
 }
