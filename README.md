@@ -1,7 +1,7 @@
 # echodock
 ## 構成
-- Go v1.13.7
-- echo v3.3.10
+- Go v1.15
+- echo v4
 
 ## セットアップ
 ```shell script
@@ -24,16 +24,11 @@ $ sh src/scripts/run.sh
     $ mv .realize.yaml .realize.yaml.bk
     $ mv .realize.yaml.debug .realize.yaml
     ```
-2. docker-compose.yamlの`command`をコメントアウト
-    ``` yaml
-    #    command: realize start --run
-    ```
-3. コンテナ再起動+realize実行
+2. realize実行
     ``` 
-    $ docker-compose up -d
     $ docker-compose exec go realize start --run
     ```
-4. Golandでデバッグ実行
+3. Golandなどでデバッグ実行
 
 ## localstack
 
