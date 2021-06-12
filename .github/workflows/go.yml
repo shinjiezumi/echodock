@@ -13,7 +13,7 @@ jobs:
     container: circleci/golang:1.15.12-buster-browsers-legacy
 
     env:
-      DB_PROTOCOL: tcp(mysql:3306)
+      DB_PROTOCOL: tcp(localhost:3306)
       DB_NAME: echodock
       DB_USER: root
       DB_PASSWORD: pass
@@ -32,6 +32,12 @@ jobs:
       - name: Setup file system permissions
         run: sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
       - uses: actions/checkout@v2
+
+      # setup libraries
+      - name: Setup Libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install default-mysql-client
 
       # setup database
       - name: setup database
