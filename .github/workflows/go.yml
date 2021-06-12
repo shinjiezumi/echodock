@@ -19,7 +19,7 @@ jobs:
       DB_PASSWORD: pass
 
     services:
-      mysql:
+      db:
         image: mysql:5.7
         env:
           MYSQL_DATABASE: echodock
@@ -42,17 +42,15 @@ jobs:
       # setup database
       - name: Setup database
         working-directory: ./src
-        run: go get github.com/rubenv/sql-migrate/...
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        #          sql-migrate up
+        run: |
+          go get github.com/rubenv/sql-migrate/...
+          sql-migrate up
 
       # build and run test
       - name: Build
         run: go build -v ./...
       - name: Test
-        run: go test -v ./...
+        run: go test -race -v ./...
 
   deploy:
     name: deploy
