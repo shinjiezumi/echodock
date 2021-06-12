@@ -37,6 +37,7 @@ jobs:
       - name: setup database
         working-directory: ./src
         run: |
+          go get github.com/rubenv/sql-migrate/...
           sql-migrate up
 
       # build and run test
