@@ -1,7 +1,7 @@
 # echodock
 ## 構成
-- Go v1.13.7
-- echo v3.3.10
+- Go v1.15
+- echo v4
 
 ## セットアップ
 ```shell script
