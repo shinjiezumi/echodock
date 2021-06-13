@@ -12,13 +12,23 @@ $ sh src/scripts/setup.sh
 ```
 
 ## 動作確認
+
 ```shell script
 $ sh src/scripts/run.sh
 ```
 
 `http://localhost:8080`を開く
 
+## アセットファイルコンパイル
+
+```shell
+$ statik -src=views --dest=views -ns=views -f
+$ statik -src=assets --dest=assets -ns=assets -f
+
+```
+
 ## リモートデバッグ
+
 1. realize.yaml切り替え
     ```
     $ mv .realize.yaml .realize.yaml.bk

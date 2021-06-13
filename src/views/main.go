@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	_ "github.com/shinjiezumi/echodock/src/statik"
+	_ "github.com/shinjiezumi/echodock/src/views/statik"
 )
 
 const (
@@ -75,11 +75,12 @@ func LoadTemplate(e *echo.Echo) {
 }
 
 func parseFiles(t *template.Template, filenames []string) *template.Template {
-	statikFS, err := fs.New()
+	statikFS, err := fs.NewWithNamespace("views")
 	if err != nil {
 		panic(err)
 	}
 
+	// template.ParseFiles流用
 	for _, filename := range filenames {
 		f, err := statikFS.Open(filename)
 		if err != nil {
