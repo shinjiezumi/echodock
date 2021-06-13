@@ -5,8 +5,12 @@ import (
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/rakyll/statik/fs"
 	"github.com/shinjiezumi/echodock/src/board/comment"
 	"github.com/shinjiezumi/echodock/src/database"
+	"net/http"
+
+	_ "github.com/shinjiezumi/echodock/src/assets/statik"
 )
 
 func SetUpRoute(e *echo.Echo) {
@@ -19,7 +23,6 @@ func SetUpRoute(e *echo.Echo) {
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
 		TokenLookup: "form:csrf",
 	}))
-	e.Static("/", "assets/board")
 
 	e.GET("/boards", Index)
 	e.GET("/boards/create", Create)
@@ -31,4 +34,11 @@ func SetUpRoute(e *echo.Echo) {
 
 	e.POST("/boards/:id/comments", comment.Store)
 	e.DELETE("/boards/:id/comments/:comment_id", comment.Delete)
+
+	statikFS, err := fs.NewWithNamespace("assets")
+	if err != nil {
+		panic(err)
+	}
+	assetHandler := http.FileServer(statikFS)
+	e.GET("/assets/*", echo.WrapHandler(http.StripPrefix("/assets", assetHandler)))
 }
