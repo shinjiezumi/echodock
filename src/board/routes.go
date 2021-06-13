@@ -19,7 +19,7 @@ func SetUpRoute(e *echo.Echo) {
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
 		TokenLookup: "form:csrf",
 	}))
-	e.Static("/", "assets/board")
+	e.Static("/assets", "assets")
 
 	e.GET("/boards", Index)
 	e.GET("/boards/create", Create)
