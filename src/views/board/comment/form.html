@@ -12,7 +12,9 @@
           <textarea name="comment" class="form-control" rows="4"></textarea>
         </div>
         <input type="hidden" name="csrf" value="{{ .Csrf }}"/>
-        <input type="submit" class="btn btn-secondary">
+        <div class="text-center">
+          <input type="submit" class="btn btn-secondary">
+        </div>
       </form>
     </div>
 {{ end }}
