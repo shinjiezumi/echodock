@@ -1,16 +1,17 @@
 package board
 
 import (
+	"net/http"
+
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/rakyll/statik/fs"
-	"github.com/shinjiezumi/echodock/src/board/comment"
-	"github.com/shinjiezumi/echodock/src/database"
-	"net/http"
 
-	_ "github.com/shinjiezumi/echodock/src/assets/statik"
+	_ "echodock/assets/statik"
+	"echodock/board/comment"
+	"echodock/database"
 )
 
 func SetUpRoute(e *echo.Echo) {

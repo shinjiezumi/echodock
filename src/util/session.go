@@ -2,9 +2,9 @@ package util
 
 import (
 	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 )
-import "github.com/labstack/echo-contrib/session"
 
 func SetFlushMsg(c echo.Context, msg string) {
 	sess, _ := session.Get("session", c)
