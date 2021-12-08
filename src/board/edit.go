@@ -1,12 +1,14 @@
 package board
 
 import (
-	"github.com/labstack/echo/v4"
-	"github.com/shinjiezumi/echodock/src/database"
-	"github.com/shinjiezumi/echodock/src/models/board"
-	"github.com/shinjiezumi/echodock/src/util"
 	"net/http"
 	"strconv"
+
+	"github.com/labstack/echo/v4"
+
+	"echodock/database"
+	"echodock/models/board"
+	"echodock/util"
 )
 
 func Edit(c echo.Context) error {

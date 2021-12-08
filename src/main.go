@@ -2,18 +2,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/joho/godotenv"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
-	"github.com/shinjiezumi/echodock/src/board"
-	"github.com/shinjiezumi/echodock/src/echobasic/cookie"
-	"github.com/shinjiezumi/echodock/src/echobasic/request"
-	"github.com/shinjiezumi/echodock/src/echobasic/response"
-	"github.com/shinjiezumi/echodock/src/localstack/sqs"
-	"github.com/shinjiezumi/echodock/src/views"
 	"io/ioutil"
 	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+
+	"echodock/board"
+	"echodock/echobasic/cookie"
+	"echodock/echobasic/request"
+	"echodock/echobasic/response"
+	"echodock/localstack/sqs"
+	"echodock/views"
 )
 
 func main() {

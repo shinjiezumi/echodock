@@ -1,15 +1,16 @@
 package views
 
 import (
-	"github.com/labstack/echo/v4"
-	"github.com/rakyll/statik/fs"
 	"html/template"
 	"io"
 	"io/ioutil"
 	"path/filepath"
 	"strings"
 
-	_ "github.com/shinjiezumi/echodock/src/views/statik"
+	"github.com/labstack/echo/v4"
+	"github.com/rakyll/statik/fs"
+
+	_ "echodock/views/statik"
 )
 
 const (

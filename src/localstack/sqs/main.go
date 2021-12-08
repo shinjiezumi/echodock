@@ -5,8 +5,9 @@ import (
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/shinjiezumi/echodock/src/database"
-	"github.com/shinjiezumi/echodock/src/localstack/sqs/http"
+
+	"echodock/database"
+	"echodock/localstack/sqs/http"
 )
 
 func SetUp(e *echo.Echo) {
