@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
+	ederr "echodock/error"
+
 	"github.com/labstack/echo/v4"
 
 	"echodock/database"
@@ -12,25 +14,32 @@ import (
 	"echodock/util"
 )
 
+// StoreCommentRequest コメント保存リクエスト
 type StoreCommentRequest struct {
-	Name    string `form:"name" validate:"required,min=1,max=255"`
-	Comment string `form:"comment" validate:"required,min=1,max=1024"`
+	Name    string `form:"name" validate:"required,min=1,max=255"`     // コメント投稿者
+	Comment string `form:"comment" validate:"required,min=1,max=1024"` // コメント
 }
 
+// Store はコメントを保存します
 func Store(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return ederr.BadRequest
+	}
+
 	b := board.GetBoardByID(database.Conn, id)
 	if b == nil {
-		return echo.NewHTTPError(http.StatusNotFound, "user not found")
+		return ederr.ResouceNotFound
 	}
 
 	req := new(StoreCommentRequest)
-	if err := c.Bind(req); err != nil {
-		return err
+	if err = c.Bind(req); err != nil {
+		panic(err)
 	}
-	tx := database.Conn.Begin()
 
 	// コメント保存
+	tx := database.Conn.Begin()
+
 	comment := board.Comment{
 		BoardID: id,
 		Name:    req.Name,
@@ -38,11 +47,13 @@ func Store(c echo.Context) error {
 	}
 	board.SaveComment(tx, &comment)
 
-	tx.Commit()
+	if err = tx.Commit().Error; err != nil {
+		panic(err)
+	}
 
 	util.SetFlushMsg(c, "コメントしました")
 
-	c.Redirect(http.StatusFound, fmt.Sprintf("/boards/%d", id))
+	_ = c.Redirect(http.StatusFound, fmt.Sprintf("/boards/%d", id))
 
 	return nil
 }
