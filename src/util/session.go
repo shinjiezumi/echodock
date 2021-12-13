@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// SetFlushMsg はフラッシュメッセージを設定します
 func SetFlushMsg(c echo.Context, msg string) {
 	sess, _ := session.Get("session", c)
 	sess.Options = &sessions.Options{
@@ -14,9 +15,10 @@ func SetFlushMsg(c echo.Context, msg string) {
 		HttpOnly: true,
 	}
 	sess.Values["flushMsg"] = msg
-	sess.Save(c.Request(), c.Response())
+	_ = sess.Save(c.Request(), c.Response())
 }
 
+// GetFlushMsg はフラッシュメッセージを取得します
 func GetFlushMsg(c echo.Context) string {
 	sess, err := session.Get("session", c)
 	if err != nil {
@@ -25,7 +27,7 @@ func GetFlushMsg(c echo.Context) string {
 
 	if msg, ok := sess.Values["flushMsg"]; ok {
 		delete(sess.Values, "flushMsg")
-		sess.Save(c.Request(), c.Response())
+		_ = sess.Save(c.Request(), c.Response())
 		return msg.(string)
 	}
 
