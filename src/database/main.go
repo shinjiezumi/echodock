@@ -1,13 +1,16 @@
 package database
 
 import (
+	"os"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"os"
 )
 
+// Conn DBコネクション
 var Conn *gorm.DB
 
+// Initialize はDBコネクションを初期化します
 func Initialize() {
 	user := os.Getenv("DB_USER")
 	pass := os.Getenv("DB_PASSWORD")
