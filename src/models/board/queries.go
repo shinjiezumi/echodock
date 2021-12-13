@@ -99,10 +99,10 @@ func SaveComment(db *gorm.DB, c *Comment) {
 	}
 }
 
-func DeleteComment(db *gorm.DB, boardID, commentID int) {
+// DeleteComment はコメントを削除します
+func DeleteComment(db *gorm.DB, c *Comment) {
 	if err := db.
-		Where("board_id = ?", boardID).
-		Where("id = ?", commentID).
+		Where("id = ?", c.ID).
 		Delete(Comment{}).Error; err != nil {
 		panic(err)
 	}

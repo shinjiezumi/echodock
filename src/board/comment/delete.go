@@ -8,24 +8,32 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"echodock/database"
+	ederr "echodock/error"
 	"echodock/models/board"
 	"echodock/util"
 )
 
+// Delete はコメントを削除します
 func Delete(c echo.Context) error {
-	boardID, _ := strconv.Atoi(c.Param("id"))
-	commentID, _ := strconv.Atoi(c.Param("comment_id"))
+	boardID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return ederr.BadRequest
+	}
+	commentID, err := strconv.Atoi(c.Param("comment_id"))
+	if err != nil {
+		return ederr.BadRequest
+	}
 	comment := board.GetComment(database.Conn, boardID, commentID)
 	if comment == nil {
-		return echo.NewHTTPError(http.StatusNotFound, "comment not found")
+		return ederr.ResouceNotFound
 	}
 
 	// コメント削除
-	board.DeleteComment(database.Conn, boardID, commentID)
+	board.DeleteComment(database.Conn, comment)
 
 	util.SetFlushMsg(c, "コメントを削除しました")
 
-	c.Redirect(http.StatusFound, fmt.Sprintf("/boards/%d", boardID))
+	_ = c.Redirect(http.StatusFound, fmt.Sprintf("/boards/%d", boardID))
 
 	return nil
 }
