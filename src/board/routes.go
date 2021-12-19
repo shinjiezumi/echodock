@@ -3,28 +3,15 @@ package board
 import (
 	"net/http"
 
-	"github.com/gorilla/sessions"
-	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 	"github.com/rakyll/statik/fs"
 
 	_ "echodock/assets/statik"
 	"echodock/board/comment"
-	"echodock/database"
 )
 
+// SetUpRoute はルーティングを設定します
 func SetUpRoute(e *echo.Echo) {
-	database.Initialize()
-	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
-	e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
-		Getter: middleware.MethodFromForm("_method"),
-	}))
-
-	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
-		TokenLookup: "form:csrf",
-	}))
-
 	e.GET("/boards", Index)
 	e.GET("/boards/create", Create)
 	e.POST("/boards", Store)

@@ -6,11 +6,14 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/sessions"
 	"github.com/joho/godotenv"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
 	"echodock/board"
+	"echodock/database"
 	"echodock/echobasic/cookie"
 	"echodock/echobasic/request"
 	"echodock/echobasic/response"
@@ -23,10 +26,28 @@ func main() {
 	views.LoadTemplate(e)
 
 	if os.Getenv("APP_ENV") == "local" {
+		// 環境変数読み込み
 		if err := godotenv.Load(".env"); err != nil {
 			panic("load env file failed")
 		}
 	}
+
+	// DB初期化
+	database.Initialize()
+
+	// Session
+	if secret := os.Getenv("SESSION_KEY"); secret == "" {
+		panic("SESSION_KEY is empty")
+	} else {
+		e.Use(session.Middleware(sessions.NewCookieStore([]byte(secret))))
+	}
+	e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
+		Getter: middleware.MethodFromForm("_method"),
+	}))
+	// CSRF
+	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
+		TokenLookup: "form:csrf",
+	}))
 
 	// アクセスログの設定
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -75,7 +96,10 @@ func main() {
 		return c.HTML(http.StatusOK, string(body))
 	})
 
+	// 掲示板
 	board.SetUpRoute(e)
+
+	// localstack系
 	sqs.SetUp(e)
 
 	port := os.Getenv("PORT")
