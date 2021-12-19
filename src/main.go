@@ -17,7 +17,7 @@ import (
 	"echodock/echobasic/cookie"
 	"echodock/echobasic/request"
 	"echodock/echobasic/response"
-	"echodock/localstack/sqs"
+	"echodock/localstack"
 	"echodock/views"
 )
 
@@ -100,7 +100,7 @@ func main() {
 	board.SetUpRoute(e)
 
 	// localstack系
-	sqs.SetUp(e)
+	localstack.Setup(e)
 
 	port := os.Getenv("PORT")
 	if port == "" {
