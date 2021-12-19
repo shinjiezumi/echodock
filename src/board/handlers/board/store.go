@@ -52,7 +52,5 @@ func Store(c echo.Context) error {
 
 	util.SetFlushMsg(c, "作成しました")
 
-	_ = c.Redirect(http.StatusFound, "/boards")
-
-	return nil
+	return c.Redirect(http.StatusFound, "/boards")
 }

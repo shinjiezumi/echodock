@@ -56,7 +56,5 @@ func Update(c echo.Context) error {
 
 	util.SetFlushMsg(c, "更新しました")
 
-	_ = c.Redirect(http.StatusFound, "/boards/"+strconv.Itoa(b.ID))
-
-	return nil
+	return c.Redirect(http.StatusFound, "/boards/"+strconv.Itoa(b.ID))
 }

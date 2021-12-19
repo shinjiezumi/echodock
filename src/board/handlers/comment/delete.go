@@ -33,7 +33,5 @@ func Delete(c echo.Context) error {
 
 	util.SetFlushMsg(c, "コメントを削除しました")
 
-	_ = c.Redirect(http.StatusFound, fmt.Sprintf("/boards/%d", boardID))
-
-	return nil
+	return c.Redirect(http.StatusFound, fmt.Sprintf("/boards/%d", boardID))
 }

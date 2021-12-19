@@ -40,7 +40,5 @@ func Delete(c echo.Context) error {
 
 	util.SetFlushMsg(c, "削除しました")
 
-	_ = c.Redirect(http.StatusFound, "/boards")
-
-	return nil
+	return c.Redirect(http.StatusFound, "/boards")
 }

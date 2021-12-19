@@ -53,7 +53,5 @@ func Store(c echo.Context) error {
 
 	util.SetFlushMsg(c, "コメントしました")
 
-	_ = c.Redirect(http.StatusFound, fmt.Sprintf("/boards/%d", id))
-
-	return nil
+	return c.Redirect(http.StatusFound, fmt.Sprintf("/boards/%d", id))
 }
