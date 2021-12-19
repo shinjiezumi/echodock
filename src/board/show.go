@@ -1,6 +1,7 @@
 package board
 
 import (
+	ederr "echodock/error"
 	"net/http"
 	"strconv"
 
@@ -11,11 +12,15 @@ import (
 	"echodock/util"
 )
 
+// Show は掲示板詳細ページを表示します
 func Show(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return ederr.BadRequest
+	}
 	b := board.GetBoardByID(database.Conn, id)
 	if b == nil {
-		return echo.NewHTTPError(http.StatusNotFound, "user not found")
+		return ederr.ResouceNotFound
 	}
 
 	flushMsg := util.GetFlushMsg(c)
