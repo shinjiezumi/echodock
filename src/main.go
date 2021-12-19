@@ -97,7 +97,7 @@ func main() {
 	})
 
 	// 掲示板
-	board.SetUpRoute(e)
+	board.Setup(e)
 
 	// localstack系
 	localstack.Setup(e)
