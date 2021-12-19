@@ -7,15 +7,21 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"echodock/database"
+	ederr "echodock/error"
 	"echodock/models/board"
 	"echodock/util"
 )
 
+// Delete は投稿を削除します
 func Delete(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return ederr.BadRequest
+	}
+
 	b := board.GetBoardByID(database.Conn, id)
 	if b == nil {
-		return echo.NewHTTPError(http.StatusNotFound, "user not found")
+		return ederr.ResouceNotFound
 	}
 
 	tx := database.Conn.Begin()
@@ -28,11 +34,11 @@ func Delete(c echo.Context) error {
 		board.DeleteTagRelation(tx, id)
 	}
 
-	tx.Commit()
+	if err := tx.Commit().Error; err != nil {
+		panic(err)
+	}
 
 	util.SetFlushMsg(c, "削除しました")
 
-	c.Redirect(http.StatusFound, "/boards")
-
-	return nil
+	return c.Redirect(http.StatusFound, "/boards")
 }

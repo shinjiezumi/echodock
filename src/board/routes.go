@@ -3,35 +3,23 @@ package board
 import (
 	"net/http"
 
-	"github.com/gorilla/sessions"
-	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 	"github.com/rakyll/statik/fs"
 
 	_ "echodock/assets/statik"
-	"echodock/board/comment"
-	"echodock/database"
+	"echodock/board/handlers/board"
+	"echodock/board/handlers/comment"
 )
 
+// SetUpRoute はルーティングを設定します
 func SetUpRoute(e *echo.Echo) {
-	database.Initialize()
-	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
-	e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
-		Getter: middleware.MethodFromForm("_method"),
-	}))
-
-	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
-		TokenLookup: "form:csrf",
-	}))
-
-	e.GET("/boards", Index)
-	e.GET("/boards/create", Create)
-	e.POST("/boards", Store)
-	e.GET("/boards/:id", Show)
-	e.GET("/boards/:id/edit", Edit)
-	e.PUT("/boards/:id", Update)
-	e.DELETE("/boards/:id", Delete)
+	e.GET("/boards", board.Index)
+	e.GET("/boards/create", board.Create)
+	e.POST("/boards", board.Store)
+	e.GET("/boards/:id", board.Show)
+	e.GET("/boards/:id/edit", board.Edit)
+	e.PUT("/boards/:id", board.Update)
+	e.DELETE("/boards/:id", board.Delete)
 
 	e.POST("/boards/:id/comments", comment.Store)
 	e.DELETE("/boards/:id/comments/:comment_id", comment.Delete)

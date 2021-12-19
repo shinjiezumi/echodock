@@ -7,20 +7,25 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"echodock/database"
+	ederr "echodock/error"
 	"echodock/models/board"
 	"echodock/util"
 )
 
+// Edit は掲示板編集ページを表示します
 func Edit(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return ederr.BadRequest
+	}
 	b := board.GetBoardByID(database.Conn, id)
 	if b == nil {
-		return echo.NewHTTPError(http.StatusNotFound, "user not found")
+		return ederr.ResouceNotFound
 	}
 
 	form := make(map[string]interface{}, 0)
 	form["action"] = "/boards/" + strconv.Itoa(b.ID)
-	form["method"] = "PUT"
+	form["method"] = http.MethodPost
 	form["name"] = b.Name
 	form["title"] = b.Title
 	form["body"] = b.Body

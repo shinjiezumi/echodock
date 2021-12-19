@@ -10,16 +10,18 @@ import (
 	"echodock/util"
 )
 
+// tag タグ
 type tag struct {
-	ID        int
-	Name      string
-	IsChecked bool
+	ID        int    // タグID
+	Name      string // タグ名
+	IsChecked bool   // チェック有無
 }
 
+// Create は掲示板を投稿ページを表示します
 func Create(c echo.Context) error {
 	form := make(map[string]interface{}, 0)
 	form["action"] = "/boards"
-	form["method"] = "POST"
+	form["method"] = http.MethodPost
 	form["name"] = ""
 	form["title"] = ""
 	form["body"] = ""

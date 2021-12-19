@@ -1,15 +1,16 @@
-package http
+package sqs
 
 import (
 	"fmt"
+	"log"
+	"net/http"
+	"os"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/labstack/echo/v4"
-	"log"
-	"net/http"
-	"os"
 )
 
 type GetQueuesResponse struct {

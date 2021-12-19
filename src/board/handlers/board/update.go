@@ -7,19 +7,25 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"echodock/database"
+	ederr "echodock/error"
 	"echodock/models/board"
 	"echodock/util"
 )
 
+// Update は掲示板を更新します
 func Update(c echo.Context) error {
 	req := new(StoreRequest)
 	if err := c.Bind(req); err != nil {
 		return err
 	}
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return ederr.BadRequest
+	}
+
 	b := board.GetBoardByID(database.Conn, id)
 	if b == nil {
-		return echo.NewHTTPError(http.StatusNotFound, "user not found")
+		return ederr.ResouceNotFound
 	}
 
 	tx := database.Conn.Begin()
@@ -44,11 +50,11 @@ func Update(c echo.Context) error {
 		board.SaveTagRelation(tx, &tr)
 	}
 
-	tx.Commit()
+	if err = tx.Commit().Error; err != nil {
+		panic(err)
+	}
 
 	util.SetFlushMsg(c, "更新しました")
 
-	c.Redirect(http.StatusFound, "/boards/"+strconv.Itoa(b.ID))
-
-	return nil
+	return c.Redirect(http.StatusFound, "/boards/"+strconv.Itoa(b.ID))
 }

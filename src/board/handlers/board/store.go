@@ -10,6 +10,7 @@ import (
 	"echodock/util"
 )
 
+// StoreRequest 掲示板保存リクエスト
 type StoreRequest struct {
 	Name  string `form:"name" validate:"required,min=1,max=255"`
 	Title string `form:"title" validate:"required,min=1,max=255"`
@@ -17,6 +18,7 @@ type StoreRequest struct {
 	Tags  []int  `form:"tags[]"`
 }
 
+// Store は掲示板を保存します
 func Store(c echo.Context) error {
 	req := new(StoreRequest)
 	if err := c.Bind(req); err != nil {
@@ -44,11 +46,11 @@ func Store(c echo.Context) error {
 		board.SaveTagRelation(tx, &tr)
 	}
 
-	tx.Commit()
+	if err := tx.Commit().Error; err != nil {
+		panic(err)
+	}
 
 	util.SetFlushMsg(c, "作成しました")
 
-	c.Redirect(http.StatusFound, "/boards")
-
-	return nil
+	return c.Redirect(http.StatusFound, "/boards")
 }

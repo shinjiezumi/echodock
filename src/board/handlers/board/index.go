@@ -10,7 +10,7 @@ import (
 	"echodock/util"
 )
 
-type b struct {
+type boardData struct {
 	ID        int
 	Title     string
 	Body      string
@@ -19,30 +19,31 @@ type b struct {
 	UpdatedAt string
 }
 
+// Index は掲示板ページを表示します
 func Index(c echo.Context) error {
-	boards := board.GetBoardList(database.Conn)
+	boardList := board.GetBoardList(database.Conn)
 
-	var boardData []b
-	for _, board := range boards {
-		boardData = append(boardData, b{
-			ID:        board.ID,
-			Title:     board.Title,
-			Body:      board.Body,
-			Name:      board.Name,
-			CreatedAt: board.CreatedAt.Format(util.DateFormat),
-			UpdatedAt: board.UpdatedAt.Format(util.DateFormat),
+	boards := make([]boardData, len(boardList))
+	for _, b := range boardList {
+		boards = append(boards, boardData{
+			ID:        b.ID,
+			Title:     b.Title,
+			Body:      b.Body,
+			Name:      b.Name,
+			CreatedAt: b.CreatedAt.Format(util.DateFormat),
+			UpdatedAt: b.UpdatedAt.Format(util.DateFormat),
 		})
 	}
 
 	flushMsg := util.GetFlushMsg(c)
 	data := struct {
 		Title    string
-		Boards   []b
+		Boards   []boardData
 		FlushMsg string
 		Csrf     string
 	}{
 		Title:    util.GenerateTitle("掲示板一覧"),
-		Boards:   boardData,
+		Boards:   boards,
 		FlushMsg: flushMsg,
 		Csrf:     c.Get("csrf").(string),
 	}

@@ -1,4 +1,4 @@
-package testsample
+package test_sample
 
 import (
 	"encoding/json"
@@ -30,7 +30,12 @@ func decode(filename string) (post Post, err error) {
 		fmt.Println("Error opening JSON file", err)
 		return
 	}
-	defer jsonFile.Close()
+	defer func(jsonFile *os.File) {
+		err := jsonFile.Close()
+		if err != nil {
+			panic(err)
+		}
+	}(jsonFile)
 
 	decoder := json.NewDecoder(jsonFile)
 	err = decoder.Decode(&post)
