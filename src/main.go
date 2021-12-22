@@ -33,7 +33,9 @@ func main() {
 	}
 
 	// DB初期化
-	database.Initialize()
+	if err := database.Initialize(); err != nil {
+		panic(fmt.Sprintf("db connection can't not initialized! err: %s", err))
+	}
 
 	// Session
 	if secret := os.Getenv("SESSION_KEY"); secret == "" {

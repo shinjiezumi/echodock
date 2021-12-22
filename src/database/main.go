@@ -11,7 +11,7 @@ import (
 var Conn *gorm.DB
 
 // Initialize はDBコネクションを初期化します
-func Initialize() {
+func Initialize() error {
 	user := os.Getenv("DB_USER")
 	pass := os.Getenv("DB_PASSWORD")
 	protocol := os.Getenv("DB_PROTOCOL")
@@ -22,8 +22,10 @@ func Initialize() {
 
 	conn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	Conn = conn
+
+	return nil
 }
