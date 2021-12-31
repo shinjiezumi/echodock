@@ -11,6 +11,7 @@ import (
 	"echodock/echobasic/response"
 )
 
+// SetUpRoutes はルーティングをセットアップします
 func SetUpRoutes(e *echo.Echo) {
 	// クエリパラメータの取得
 	e.GET("/request/query", request.HandleQuery)
