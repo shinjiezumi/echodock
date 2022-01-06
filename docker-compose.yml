@@ -10,8 +10,8 @@ services:
       - db
       - localstack
     ports:
-        - 8080:8080
-        - 2345:2345
+      - "8080:8080"
+      - "2345:2345"
     security_opt:
       - apparmor:unconfined
     cap_add:
@@ -31,7 +31,7 @@ services:
   db:
     build: docker/mysql
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
       - ./docker/mysql/conf.d:/etc/mysql/conf.d
@@ -52,4 +52,4 @@ services:
       - ./localstack:/tmp/localstack
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 4566:4566
+      - "4566:4566"
