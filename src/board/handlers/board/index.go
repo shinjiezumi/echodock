@@ -42,7 +42,7 @@ func Index(c echo.Context) error {
 		FlushMsg string
 		Csrf     string
 	}{
-		Title:    util.GenerateTitle("掲示板一覧"),
+		Title:    util.GeneratePageTitle("掲示板一覧"),
 		Boards:   boards,
 		FlushMsg: flushMsg,
 		Csrf:     c.Get("csrf").(string),
