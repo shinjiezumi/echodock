@@ -1,9 +1,10 @@
 package board
 
 import (
-	ederr "echodock/error"
 	"net/http"
 	"strconv"
+
+	ederr "echodock/error"
 
 	"github.com/labstack/echo/v4"
 
@@ -31,7 +32,7 @@ func Show(c echo.Context) error {
 		FlushMsg string
 		Csrf     string
 	}{
-		Title:    util.GenerateTitle("掲示板一覧"),
+		Title:    util.GeneratePageTitle("掲示板一覧"),
 		Board:    *b,
 		FlushMsg: flushMsg,
 		Csrf:     c.Get("csrf").(string),

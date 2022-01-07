@@ -52,7 +52,7 @@ func Edit(c echo.Context) error {
 		Title string
 		Form  map[string]interface{}
 	}{
-		Title: util.GenerateTitle("掲示板更新"),
+		Title: util.GeneratePageTitle("掲示板更新"),
 		Form:  form,
 	}
 

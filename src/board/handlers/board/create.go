@@ -41,7 +41,7 @@ func Create(c echo.Context) error {
 		Title string
 		Form  map[string]interface{}
 	}{
-		Title: util.GenerateTitle("掲示板作成"),
+		Title: util.GeneratePageTitle("掲示板作成"),
 		Form:  form,
 	}
 

@@ -2,8 +2,10 @@ package util
 
 import "fmt"
 
+// アプリ名
 const appName = "echodock"
 
-func GenerateTitle(pageTitle string) string {
-	return fmt.Sprintf("%s|%s", pageTitle, appName)
+// GeneratePageTitle はページタイトルを生成します
+func GeneratePageTitle(pageName string) string {
+	return fmt.Sprintf("%s|%s", pageName, appName)
 }
