@@ -1,1 +1,1 @@
-docker-compose exec go realize start
+docker-compose exec go air

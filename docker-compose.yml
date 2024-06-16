@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: docker/go/Dockerfile
       target: build
+    platform: linux/amd64
     depends_on:
       - db
       - localstack
@@ -30,6 +31,7 @@ services:
       DB_PASSWORD: root
   db:
     build: docker/mysql
+    platform: linux/x86_64
     ports:
       - "3306:3306"
     volumes:
